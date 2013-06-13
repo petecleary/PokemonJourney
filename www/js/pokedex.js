@@ -61,7 +61,7 @@ var PokedexPokemonDetailsView = function (id) {
     $('#pokedex-pokemon-detail-name').html(p[0].name);
     var template = Handlebars.compile($("#pokedex-pokemon-detail-tpl").html());
     var html = template(p);
-    $("#pokedex-pokemon-detail-ul").html(html);
+    $("#pokedex-pokemon-detail-ul").html(html).trigger('create');;
 }
 
 var PokedexTypesView = function () {
