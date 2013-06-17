@@ -4,6 +4,8 @@
     return result;
 });
 
+
+
 var pokedex = function () {
 
     pokedex.pokemon = {};
@@ -117,6 +119,20 @@ var PokedexMovesView = function () {
     $("#pokedex-moves-ul").html(html);
 }
 
+document.addEventListener("deviceready", onDeviceReady, false);
+
+var connectionType = 'none';
+
+function onDeviceReady() {
+    connectionType = navigator.network.connection.type;
+    document.addEventListener("online", setConnection);
+    document.addEventListener("offline", setConnection);
+}
+
+function setConnection(){
+    connectionType = navigator.network.connection.type;
+}
+
 $(document).bind("pagebeforechange", function (event, data) {
     if (typeof data.toPage === "string") {
         var parts = data.toPage.split('#');
@@ -130,10 +146,17 @@ $(document).bind("pagebeforechange", function (event, data) {
                     PokedexPokemonDetailsEditView(parts[1] - 1);
                     break;
                 case "sync":
-                    var networkState = navigator.connection.type;
-                    console.log(networkState);
                     var syncFrame = $('#syncFrame');
-                    syncFrame.src = "http://www.piandmash.com";
+                    switch (connectionType) {
+                        case "ethernet":
+                        case "wifi":
+                            syncFrame.attr("src", "http://www.piandmash.com");
+                            break;
+                        default:
+                            syncFrame.attr("src", "noconnection.html");
+                            break;
+                    }
+                    console.log(syncFrame.attr("src"));
                     break;
             }
         }
