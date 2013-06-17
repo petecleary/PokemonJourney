@@ -4,10 +4,38 @@
     return result;
 });
 
-var pokedex = function (successCallback, errorCallback) {
-    
-    this.findById = function (id, callback) {
+var pokedex = function () {
+
+    pokedex.pokemon = {};
+
+    pokedex.pokemon.findAll = function (callback) {
+        var pokemon = JSON.parse(localStorage["pokemonjourney.pokedex.pokemon"]);
+        callLater(callback, pokemon);
+    }
+
+    pokedex.pokemon.findById = function (id, callback) {
+        var pokemon = JSON.parse(localStorage["pokemonjourney.pokedex.pokemon"]);
         callLater(callback, pokemon[id]);
+    }
+
+    pokedex.pokemon.save = function () {
+        var pokemon = JSON.parse(localStorage["pokemonjourney.pokedex.pokemon"]);
+        var id = $('#pokedex-pokemon-id').val() - 1;
+        pokemon[id].area = $('#pokedex-pokemon-area').val();
+        pokemon[id].description = $('#pokedex-pokemon-description').val();
+        localStorage["pokemonjourney.pokedex.pokemon"] = JSON.stringify(pokemon);
+        $.mobile.navigate('#pokedex-pokemon-detail?' + pokemon[id].id);
+    }
+
+    pokedex.showsync = function () {
+        var networkState = navigator.connection.type;
+        console.log(networkState);
+        var syncFrame = $('#syncFrame');
+        syncFrame.src = "http://www.piandmash.com";
+
+        //pd = encodeURI(localStorage["pokemonjourney.pokedex.pokemon"]);
+        //console.log('mailto:pete.cleary@gmail.com?subject=Pokemon%20Journey%20Pokedex&body=' + pd);
+        //document.location = 'mailto://pete.cleary@gmail.com?subject=Pokemon%20Journey%20Pokedex&body=' + pd;
     }
 
     // Used to simulate async calls. This is done to provide a consistent interface with stores (like WebSqlStore)
@@ -20,48 +48,54 @@ var pokedex = function (successCallback, errorCallback) {
         }
     }
 
+    if (!localStorage["pokemonjourney.pokedex"]) {
+        //save to local store
+        localStorage["pokemonjourney.pokedex.pokemon"] = JSON.stringify(pokedex.data.pokemon);
 
-    callLater(successCallback);
+        localStorage["pokemonjourney.pokedex"] = true;
+    }
+
+    //remove data to speed things up
+    delete pokedex.data.pokemon;
+
+    //create views
+    PokedexPokemonView();
+    PokedexTypesView();
+    PokedexBallsView();
+    PokedexMovesView();
 
 }
-
-$("#pokedex-pokemon-detail").on("pagechange", function (event) { alert("test"); } )
+pokedex.data = {};
 
 pokedex.firstTimeView = false;
 var PokedexPokemonView = function () {
-    /*
-    if (pokedex.firstTimeView) {
-        var t = 0;
-        var l = 120;
-        var col = 0;
-        for (var x = 0; x < pokedex.pokemon.length; x++) {
-            pokedex.pokemon[x].description = pokedex.pokemon[x].name;
-            pokedex.pokemon[x].area = 'Unknown';
-            l -= 120;
-            if (col > 14) {
-                l = 0;
-                t -= 120;
-            }
-            col += 1;
-            pokedex.pokemon[x].imageTop = t;
-            pokedex.pokemon[x].imageLeft = l;
-        }
-        console.log(pokedex.pokemon);
-    }
-    pokedex.firstTimeView = false;
-    */    
-    var template = Handlebars.compile($("#pokedex-pokemon-li-tpl").html());
-    var html = template(pokedex.pokemon);
-    $("#pokedex-pokemon-ul").html(html);
+    pokedex.pokemon.findAll(function (pokemon) {
+        var template = Handlebars.compile($("#pokedex-pokemon-li-tpl").html());
+        var html = template(pokemon);
+        $("#pokedex-pokemon-ul").html(html);
+    });
 }
 
 var PokedexPokemonDetailsView = function (id) {
-    var p = new Array(pokedex.pokemon[id]);    
-    console.log(p[0]);
-    $('#pokedex-pokemon-detail-name').html(p[0].name);
-    var template = Handlebars.compile($("#pokedex-pokemon-detail-tpl").html());
-    var html = template(p);
-    $("#pokedex-pokemon-detail-ul").html(html).trigger('create');;
+    pokedex.pokemon.findById(id, function (pokemon) {
+        var p = new Array(pokemon);
+        console.log(pokemon);
+        $('#pokedex-pokemon-detail-name').html(pokemon.name);
+        $('#pokedex-pokemon-detail-editId').attr('href', '#pokedex-pokemon-detail-edit?' + p[0].id);
+        var template = Handlebars.compile($("#pokedex-pokemon-detail-tpl").html());
+        var html = template(p);
+        $("#pokedex-pokemon-detail-ul").html(html).trigger('create');;
+    });
+}
+
+var PokedexPokemonDetailsEditView = function (id) {
+    pokedex.pokemon.findById(id, function (pokemon) {
+        var p = new Array(pokemon);
+        $('#pokedex-pokemon-detail-diaplyId').attr('href', '#pokedex-pokemon-detail?' + p[0].id);
+        var template = Handlebars.compile($("#pokedex-pokemon-detail-edit-tpl").html());
+        var html = template(p);
+        $("#pokedex-pokemon-detail-edit-ul").html(html).trigger('create');
+    });
 }
 
 var PokedexTypesView = function () {
@@ -78,21 +112,6 @@ var PokedexBallsView = function () {
 }
 
 var PokedexMovesView = function () {
-    /*
-    if (pokedex.firstTimeView) {
-        for (var x = 0; x < pokedex.moves.length; x++) {
-            var pa = [];
-            for (var propt in pokedex.moves[x]) {
-                if (propt !== 'name') {
-                    pa.push({ 'key': propt, 'value': pokedex.moves[x][propt] });
-                }
-            }
-            pokedex.moves[x].details = pa;
-        }
-        console.log(pokedex.moves);
-    }
-    pokedex.firstTimeView = false;
-    */
     var template = Handlebars.compile($("#pokedex-moves-li-tpl").html());
     var html = template(pokedex.moves);
     $("#pokedex-moves-ul").html(html);
@@ -107,7 +126,17 @@ $(document).bind("pagebeforechange", function (event, data) {
                 case "pokedex-pokemon-detail":
                     PokedexPokemonDetailsView(parts[1] - 1);
                     break;
+                case "pokedex-pokemon-detail-edit":
+                    PokedexPokemonDetailsEditView(parts[1] - 1);
+                    break;
+                case "sync":
+                    var networkState = navigator.connection.type;
+                    console.log(networkState);
+                    var syncFrame = $('#syncFrame');
+                    syncFrame.src = "http://www.piandmash.com";
+                    break;
             }
         }
 	}
 });
+

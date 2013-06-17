@@ -35,16 +35,31 @@
 		<p><a href="#new" data-role="button" data-rel="dialog" data-transition="pop">Load Game</a></p>
 		<p><a href="#new" data-role="button" data-rel="dialog" data-transition="pop">Rules Game</a></p>
 		<p><a href="#pokedex"data-role="button" data-transition="slide">Pokedex</a></p>
+		<p><a href="#sync"data-role="button" data-transition="slide">Synchronise</a></p>
 	</div><!-- /content -->
 	
 </div><!-- /home -->
+    
+<!-- #sync -->
 
+<div data-role="page" id="sync">
+	<div data-role="header">
+        <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+        href="#home" class="ui-btn-left">
+            Back
+        </a>
+		<h3>Synchronise</h3>
+	</div><!-- /header -->    
+    <div data-role="content">
+        <iframe src="noconnection.html" id="syncFrame" style="width:200px;height:200px;border:none;" />
+	</div><!-- /content -->	
+</div><!-- #sync -->
 
 <!-- #pokedex -->
 <div data-role="page" id="pokedex">
 
 	<div data-role="header">
-        <a data-role="button" data-rel="back" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+        <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
         href="#home" class="ui-btn-left">
             Back
         </a>
@@ -56,13 +71,14 @@
 		<p><a href="#pokedex-types" data-role="button" data-transition="slide">Types</a></p>
 		<p><a href="#pokedex-moves" data-role="button" data-transition="slide">Moves</a></p>
 		<p><a href="#pokedex-pokeballs" data-role="button" data-transition="slide">Pokeballs</a></p>
+		<p><a href="http://www.piandmash.com" data-role="button" data-transition="slide">Upload Pokedex</a></p>
 	</div><!-- /content -->
 </div><!-- #pokedex -->
     
 <!-- #pokedex-pokemon -->
 <div data-role="page" id="pokedex-pokemon">
 	<div data-role="header">
-        <a data-role="button" data-rel="back" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+        <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
         href="#pokedex" class="ui-btn-left">
             Back
         </a>
@@ -86,7 +102,7 @@
 <!-- #pokedex-types -->
 <div data-role="page" id="pokedex-types">
 	<div data-role="header">
-        <a data-role="button" data-rel="back" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+        <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
         href="#pokedex" class="ui-btn-left">
             Back
         </a>
@@ -108,7 +124,7 @@
 <!-- #pokedex-pokeballs -->
 <div data-role="page" id="pokedex-pokeballs">
 	<div data-role="header">
-        <a data-role="button" data-rel="back" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+        <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
         href="#pokedex" class="ui-btn-left">
             Back
         </a>
@@ -133,7 +149,7 @@
 <!-- #pokedex-moves -->
 <div data-role="page" id="pokedex-moves">
 	<div data-role="header">
-        <a data-role="button" data-rel="back" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+        <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
         href="#pokedex" class="ui-btn-left">
             Back
         </a>
@@ -162,13 +178,18 @@
 </div><!-- #pokedex-moves -->
     
 <!-- #pokedex-pokemon-detail -->
-<div data-role="page" id="pokedex-pokemon-detail">
+<div data-role="page" id="pokedex-pokemon-detail" data-fetch='always'>
         
 	    <div data-role="header">
-            <a data-role="button" data-rel="back" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
-            href="#pokedex" class="ui-btn-left">
+            <a data-role="button" data-transition="slide" data-icon="edit" data-iconpos="right"
+            href="#pokedex-pokemon-detail?" id="pokedex-pokemon-detail-editId" class="ui-btn-right">
+                Edit
+            </a>
+            <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+            href="#pokedex-pokemon" class="ui-btn-left">
                 Back
             </a>
+            
 		    <h3 id="pokedex-pokemon-detail-name"></h3>
 	    </div><!-- /header -->
         <script id="pokedex-pokemon-detail-tpl" type="text/x-handlebars-template">
@@ -282,7 +303,55 @@
         </script>
     <div id="pokedex-pokemon-detail-ul">	
     </div>
-</div><!-- #pokedex-pokemon -->
+</div><!-- #pokedex-pokemon-detail -->
+    
+<!-- #pokedex-pokemon-detail-edit -->
+<div data-role="page" id="pokedex-pokemon-detail-edit" data-fetch='always'>
+        
+	    <div data-role="header">
+            <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+            href="#pokedex-pokemon" class="ui-btn-left" id="pokedex-pokemon-detail-diaplyId">
+                Back
+            </a>
+		    <h3>Editor</h3>
+	    </div><!-- /header -->
+        <script id="pokedex-pokemon-detail-edit-tpl" type="text/x-handlebars-template">
+            {{#.}}  
+    
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <div class="sprite-image" style="width: 120px; height:120px; overflow:hidden; position:relative; float:left; margin: 5px; border:1px black solid;">
+                        <img src="img/pokemon.png" alt="icon" width="1800" height="1320" style="position:absolute; top: {{this.imageTop}}px; left: {{this.imageLeft}}px;">
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <h4>{{name}}<h4>
+                </div>
+            </div>
+            
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <label for="area">
+                        Area
+                    </label>
+                    <textarea name="pokedex-pokemon-area" id="pokedex-pokemon-area">{{this.area}}</textarea>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="description">
+                        Description
+                    </label>
+                    <textarea name="pokedex-pokemon-description" id="pokedex-pokemon-description">{{this.description}}</textarea>
+                </div>
+                <input type="hidden" id="pokedex-pokemon-id" value='{{this.id}}' />
+                <input type="submit" value="Save" id="pokedex-pokemon-save" onclick="pokedex.pokemon.save();">
+            
+            </div>
+
+            {{/.}}
+        </script>
+    <div id="pokedex-pokemon-detail-edit-ul">	
+    </div>
+</div><!-- #pokedex-pokemon-detail-edit -->
 
 <!-- Start of third page: #popup -->
 <div data-role="page" id="new">
@@ -298,10 +367,7 @@
 </div><!-- /page popup -->
 
     <script>
-        PokedexPokemonView();
-        PokedexTypesView();
-        PokedexBallsView();
-        PokedexMovesView();
+        pokedex();
     </script>
 </body>
 </html>
