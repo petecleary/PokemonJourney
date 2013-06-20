@@ -1,0 +1,42 @@
+
+<header class="bar-title">
+  <span class="button-prev" ng-click="direction('back');goBack();">
+    Back
+  </span>
+    <h1 class="title">Pokedex</h1>
+</header>
+<div class="content">
+    <ul class="list">
+        <li ng-click="direction('front');go('/pokedex/pokemon')" class="link" >
+          Pokemon
+          <span class="chevron"></span>
+        </li>
+        <li ng-click="direction('front');go('/pokedex/types')" class="link" >
+          Types
+          <span class="chevron"></span>
+        </li>
+        <li ng-click="direction('front');go('/pokedex/moves')" class="link" >
+          Moves
+          <span class="chevron"></span>
+        </li>
+        <li ng-click="direction('front');go('/pokedex/pokeballs')" class="link" >
+          Pokeballs
+          <span class="chevron"></span>
+        </li>
+    </ul>
+</div>
+
+<nav class="bar-tab">
+  <ul class="tab-inner">
+    <li class="tab-item active">
+      <a href="#" onclick="return false;">
+        <img class="tab-icon" src="img/icon-home.png">
+        <div class="tab-label">Home</div>
+      </a>
+    </li>
+    <li class="tab-item link" ng-click="direction('front');go('/settings')">
+        <img class="tab-icon" src="img/icon-settings.png">
+        <div class="tab-label">Settings</div>
+    </li>
+  </ul>
+</nav>

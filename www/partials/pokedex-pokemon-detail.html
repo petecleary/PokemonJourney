@@ -1,0 +1,35 @@
+
+<header class="bar-title">
+  <span class="button-prev" ng-click="direction('back');goBack();">
+    Back
+  </span>
+    <h1 class="title">{{pokemon.name}}</h1>
+</header>
+<div class="content">
+    
+    <div class="input-row">
+    <div class="sprite-image" style="width: 120px; height:120px; overflow:hidden; position:relative; float:left; margin: 5px; border:1px black solid;">
+        <img src="img/pokemon.png" alt="icon" width="1800" height="1320" style="position:absolute; top: {{pokemon.imageTop}}px; left: {{pokemon.imageLeft}}px;">
+    </div>
+        {{pokemon.area}}
+    </div>
+    <ul class="list">
+        <li class="list-divider">Description</li>
+        <li>{{pokemon.description}}</li>
+        <li class="list-divider">Ability</li>
+        <li>{{pokemon.ability1}}<br />{{pokemon.ability2}}</li>
+        <li class="list-divider">Types</li>
+        <li>{{pokemon.type1}}<br />{{pokemon.type2}}</li>
+        <li class="list-divider">Moves</li>
+        <li><span>{{move.move}} (level {{move.level}})<br /></span></li>
+        <li class="list-divider">Base Stats</li>
+        <li>
+            <span>Attack: {{pokemon.baseStats.atk}}</span><br />
+            <span>Defence: {{pokemon.baseStats.def}}</span><br />
+            <span>HP: {{pokemon.baseStats.hp}}</span><br />
+            <span>Special Attack: {{pokemon.baseStats.spAtk}}</span><br />
+            <span>Special Defence: {{pokemon.baseStats.spDef}}</span><br />
+            <span>Speed: {{pokemon.baseStats.speed}}</span><br />
+        </li>
+    </ul>
+</div>

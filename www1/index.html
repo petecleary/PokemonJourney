@@ -1,0 +1,374 @@
+
+<!DOCTYPE html> 
+<html> 
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>Pokemon Journey</title> 
+	<link rel="stylesheet" href="css/jquery.mobile-1.3.1.min.css" />
+	<link rel="stylesheet" href="css/jquery.mobile.theme-1.3.1.min.css" />
+	<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.1.min.css" />
+	<link rel="stylesheet" href="css/pokemonjourney.css" />
+    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+	<script src="js/jquery-2.0.2.min.js"></script>
+	<script src="js/jquery.mobile-1.3.1.min.js"></script>
+    <script src="js/handlebars.js"></script>
+    <script src="js/pokedex.js"></script>
+    <script src="js/data/moves.js"></script>
+    <script src="js/data/pokeballs.js"></script>
+    <script src="js/data/pokemon.js"></script>
+    <script src="js/data/types.js"></script>
+</head> 
+
+	
+<body> 
+
+<!-- Start of first page: #one -->
+<div data-role="page" id="home">
+
+	<div data-role="header">
+		<h1 style="overflow:visible;">Pokemon Journey</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" >	
+		<p><a href="#new" data-role="button" data-rel="dialog" data-transition="pop">New Game</a></p>
+		<p><a href="#new" data-role="button" data-rel="dialog" data-transition="pop">Load Game</a></p>
+		<p><a href="#new" data-role="button" data-rel="dialog" data-transition="pop">Rules Game</a></p>
+		<p><a href="#pokedex" data-role="button" data-transition="slide">Pokedex</a></p>
+		<p><a href="#sync" data-role="button" data-transition="slide">Synchronise</a></p>
+	</div><!-- /content -->
+	
+</div><!-- /home -->
+    
+<!-- #sync -->
+
+<div data-role="page" id="sync">
+	<div data-role="header">
+        <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+        href="#home" class="ui-btn-left">
+            Back
+        </a>
+		<h3>Synchronise</h3>
+	</div><!-- /header -->    
+    <div data-role="content">
+        <iframe src="noconnection.html" id="syncFrame" style="width:200px;height:200px;border:none;"></iframe>
+	</div><!-- /content -->	
+</div><!-- #sync -->
+
+<!-- #pokedex -->
+<div data-role="page" id="pokedex">
+
+	<div data-role="header">
+        <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+        href="#home" class="ui-btn-left">
+            Back
+        </a>
+		<h3>Pokedex</h3>
+	</div><!-- /header -->
+    
+	<div data-role="content" >	
+		<p><a href="#pokedex-pokemon" data-role="button" data-transition="slide">Pokemon</a></p>
+		<p><a href="#pokedex-types" data-role="button" data-transition="slide">Types</a></p>
+		<p><a href="#pokedex-moves" data-role="button" data-transition="slide">Moves</a></p>
+		<p><a href="#pokedex-pokeballs" data-role="button" data-transition="slide">Pokeballs</a></p>
+		<p><a href="http://www.piandmash.com" data-role="button" data-transition="slide">Upload Pokedex</a></p>
+	</div><!-- /content -->
+</div><!-- #pokedex -->
+    
+<!-- #pokedex-pokemon -->
+<div data-role="page" id="pokedex-pokemon">
+	<div data-role="header">
+        <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+        href="#pokedex" class="ui-btn-left">
+            Back
+        </a>
+		<h3>Pokemon</h3>
+	</div><!-- /header -->    
+	<div data-role="content" data-theme="a">	
+        <ul id="pokedex-pokemon-ul" data-role="listview" data-divider-theme="b" data-inset="true">            
+        <script id="pokedex-pokemon-li-tpl" type="text/x-handlebars-template">
+            {{#.}}            
+            <li data-theme="c">
+                <a href="#pokedex-pokemon-detail?{{this.id}}" data-transition="slide">
+                    {{this.name}}
+                </a>
+            </li>
+            {{/.}}
+        </script>
+        </ul>		
+	</div><!-- /content -->	
+</div><!-- #pokedex-pokemon -->
+    
+<!-- #pokedex-types -->
+<div data-role="page" id="pokedex-types">
+	<div data-role="header">
+        <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+        href="#pokedex" class="ui-btn-left">
+            Back
+        </a>
+		<h3>Types</h3>
+	</div><!-- /header -->    
+	<div data-role="content">	        
+        <ul id="pokedex-types-ul" data-role="listview" data-divider-theme="b" data-inset="true">            
+        <script id="pokedex-types-li-tpl" type="text/x-handlebars-template">
+            {{#.}}  
+            <li data-theme="c">
+                    {{this.name}}
+            </li>          
+            {{/.}}
+        </script>
+        </ul>		
+	</div><!-- /content -->	
+</div><!-- #pokedex-types -->
+    
+<!-- #pokedex-pokeballs -->
+<div data-role="page" id="pokedex-pokeballs">
+	<div data-role="header">
+        <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+        href="#pokedex" class="ui-btn-left">
+            Back
+        </a>
+		<h3>Pokeballs</h3>
+	</div><!-- /header -->    
+	<div data-role="content">	        
+        <ul id="pokedex-pokeballs-ul" data-role="listview" data-divider-theme="b" data-inset="true">            
+        <script id="pokedex-pokeballs-li-tpl" type="text/x-handlebars-template">
+            {{#.}}  
+            <li data-theme="c">
+            <div class="sprite-image" style="width: 25px; height:25px; overflow:hidden; position:relative; float:left; margin-right:10px;">
+                <img src="img/pokeballs.png" alt="icon" width="121" height="144" style="position:absolute; top: {{this.image-top}}px; left: {{this.image-left}}px;">
+            </div>
+                    {{this.name}}
+            </li>          
+            {{/.}}
+        </script>
+        </ul>		
+	</div><!-- /content -->	
+</div><!-- #pokedex-pokeballs -->
+    
+<!-- #pokedex-moves -->
+<div data-role="page" id="pokedex-moves">
+	<div data-role="header">
+        <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+        href="#pokedex" class="ui-btn-left">
+            Back
+        </a>
+		<h3>Moves</h3>
+	</div><!-- /header -->    
+	<div data-role="content">	        
+        <div id="pokedex-moves-ul">
+            <script id="pokedex-moves-li-tpl" type="text/x-handlebars-template">
+                {{#.}}              
+                <div data-role="collapsible">
+                    <h3>
+                        {{this.name}}
+                    </h3>                    
+                    <div class="ui-grid-a">
+                            {{#each this.details}}
+                        <div class="ui-block-a"><strong>{{this.key}}</strong>
+                        </div>
+                        <div class="ui-block-b">{{this.value}}
+                        </div>
+                    {{/each}}</div>
+                </div>         
+                {{/.}}
+            </script>	
+        </div>
+	</div><!-- /content -->	
+</div><!-- #pokedex-moves -->
+    
+<!-- #pokedex-pokemon-detail -->
+<div data-role="page" id="pokedex-pokemon-detail" data-fetch='always'>
+        
+	    <div data-role="header">
+            <a data-role="button" data-transition="slide" data-icon="edit" data-iconpos="right"
+            href="#pokedex-pokemon-detail?" id="pokedex-pokemon-detail-editId" class="ui-btn-right">
+                Edit
+            </a>
+            <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+            href="#pokedex-pokemon" class="ui-btn-left">
+                Back
+            </a>
+            
+		    <h3 id="pokedex-pokemon-detail-name"></h3>
+	    </div><!-- /header -->
+        <script id="pokedex-pokemon-detail-tpl" type="text/x-handlebars-template">
+            {{#.}}  
+    
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <div class="sprite-image" style="width: 120px; height:120px; overflow:hidden; position:relative; float:left; margin: 5px; border:1px black solid;">
+                        <img src="img/pokemon.png" alt="icon" width="1800" height="1320" style="position:absolute; top: {{this.imageTop}}px; left: {{this.imageLeft}}px;">
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <h4>Area: {{area}}<h4>
+                </div>
+            </div>
+            <div style="margin: 5px;">
+            <p>{{this.description}}</p>
+            </div>
+        <div data-role="collapsible-set">
+            <div data-role="collapsible">
+                <h3>
+                    Ability
+                </h3>
+                <div>
+                    {{ability1}}
+                    <br />
+                    {{ability2}}
+                </div>	
+            </div>        
+            <div data-role="collapsible">
+                <h3>
+                    Types
+                </h3>
+                <div>
+                    {{type1}}
+                    <br />
+                    {{type2}}
+                </div>	
+            </div>        
+            <div data-role="collapsible">
+                <h3>
+                    Moves
+                </h3>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <strong>Level</strong>
+                    </div>
+                    <div class="ui-block-b">
+                        <strong>Move</strong>
+                    </div>
+                    {{#each this.learnset}}
+                    <div class="ui-block-a">
+                        {{level}}
+                    </div>
+                    <div class="ui-block-b">
+                        {{move}}
+                    </div>
+                    {{/each}}
+                </div>	
+            </div>        
+            <div data-role="collapsible">
+                <h3>
+                    Base Stats
+                </h3>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <strong>Type</strong>
+                    </div>
+                    <div class="ui-block-b">
+                        <strong>Value</strong>
+                    </div>
+                    <div class="ui-block-a">
+                        Attack
+                    </div>
+                    <div class="ui-block-b">
+                        {{this.baseStats.atk}}
+                    </div>
+                    <div class="ui-block-a">
+                        Defence
+                    </div>
+                    <div class="ui-block-b">
+                        {{this.baseStats.def}}
+                    </div>
+                    <div class="ui-block-a">
+                        HP
+                    </div>
+                    <div class="ui-block-b">
+                        {{this.baseStats.hp}}
+                    </div>
+                    <div class="ui-block-a">
+                        Special Attack
+                    </div>
+                    <div class="ui-block-b">
+                        {{this.baseStats.spAtk}}
+                    </div>
+                    <div class="ui-block-a">
+                        Special Defence
+                    </div>
+                    <div class="ui-block-b">
+                        {{this.baseStats.spDef}}
+                    </div>
+                    <div class="ui-block-a">
+                        Speed
+                    </div>
+                    <div class="ui-block-b">
+                        {{this.baseStats.speed}}
+                    </div>
+                </div>	
+            </div>                  
+            {{/.}}
+        </script>
+    <div id="pokedex-pokemon-detail-ul">	
+    </div>
+</div><!-- #pokedex-pokemon-detail -->
+    
+<!-- #pokedex-pokemon-detail-edit -->
+<div data-role="page" id="pokedex-pokemon-detail-edit" data-fetch='always'>
+        
+	    <div data-role="header">
+            <a data-role="button" data-direction="reverse" data-transition="slide" data-icon="arrow-l" data-iconpos="left"
+            href="#pokedex-pokemon" class="ui-btn-left" id="pokedex-pokemon-detail-diaplyId">
+                Back
+            </a>
+		    <h3>Editor</h3>
+	    </div><!-- /header -->
+        <script id="pokedex-pokemon-detail-edit-tpl" type="text/x-handlebars-template">
+            {{#.}}  
+    
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <div class="sprite-image" style="width: 120px; height:120px; overflow:hidden; position:relative; float:left; margin: 5px; border:1px black solid;">
+                        <img src="img/pokemon.png" alt="icon" width="1800" height="1320" style="position:absolute; top: {{this.imageTop}}px; left: {{this.imageLeft}}px;">
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <h4>{{name}}<h4>
+                </div>
+            </div>
+            
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <label for="area">
+                        Area
+                    </label>
+                    <textarea name="pokedex-pokemon-area" id="pokedex-pokemon-area">{{this.area}}</textarea>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="description">
+                        Description
+                    </label>
+                    <textarea name="pokedex-pokemon-description" id="pokedex-pokemon-description">{{this.description}}</textarea>
+                </div>
+                <input type="hidden" id="pokedex-pokemon-id" value='{{this.id}}' />
+                <input type="submit" value="Save" id="pokedex-pokemon-save" onclick="pokedex.pokemon.save();">
+            
+            </div>
+
+            {{/.}}
+        </script>
+    <div id="pokedex-pokemon-detail-edit-ul">	
+    </div>
+</div><!-- #pokedex-pokemon-detail-edit -->
+
+<!-- Start of third page: #popup -->
+<div data-role="page" id="new">
+
+	<div data-role="header" data-theme="e">
+		<h1>Wait for it!</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="d">	
+		<h2>Come back later</h2>
+		<p>We are working on getting this built.</p>		
+	</div><!-- /content -->
+</div><!-- /page popup -->
+
+    <script>
+        pokedex();
+    </script>
+</body>
+</html>
