@@ -1,0 +1,14 @@
+
+<header class="bar-title">
+  <span class="button-prev" ng-click="direction('back');goBack();">
+    Back
+  </span>
+    <h1 class="title">Types</h1>
+</header>
+<div class="content">
+    <ul class="list">
+        <li ng-repeat="type in types">
+          {{type.name}}
+        </li>
+    </ul>
+</div>

@@ -1,4 +1,4 @@
-﻿pokedex.types = [
+﻿pokedex.data.types = [
     {
     	"name": "ghost",
     	"details": {

@@ -1,0 +1,19 @@
+
+<header class="bar-title">
+  <span class="button-prev" ng-click="direction('back');goBack();">
+    Back
+  </span>
+    <h1 class="title">Moves</h1>
+</header>
+<div class="content">
+    <ul class="list">
+        <li ng-repeat="move in moves" class="link" >
+          <strong>{{move.name}}</strong>
+            <div>                
+                <span ng-repeat="detail in move.details">
+                    {{detail.key}}: {{ detail.value}} <br />
+                </span>
+            </div>
+        </li>
+    </ul>
+</div>

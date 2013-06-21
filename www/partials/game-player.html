@@ -1,0 +1,37 @@
+
+<header class="bar-title">
+    <h1 class="title">{{player.name}}</h1>
+</header>
+<div class="content"> 
+    <ul class="list">
+        <li ng-click="direction('front');go('/game/player/{{$index}}')" class="link" >
+            &pound;{{player.bag.money}}
+            <span class="chevron"></span>            
+        </li>
+        <li ng-click="direction('front');go('/game/player/{{$index}}')" class="link" >
+            Pokemon
+            <span class="chevron"></span>    
+            <span class="count">{{player.pokemon.length}}</span>        
+        </li>
+        <li ng-click="direction('front');go('/game/player/{{$index}}')" class="link" >
+            Gym Badges
+            <span class="chevron"></span>    
+            <span class="count">{{player.bag.badges.length}}</span>        
+        </li>
+        <li ng-click="direction('front');go('/game/player/{{$index}}')" class="link" >
+            Pokeballs
+            <span class="chevron"></span>    
+            <span class="count">{{player.bag.pokeballs.length}}</span>        
+        </li>
+        <li>
+            <h2>Pokemon in bag</h2>
+        </li>
+        <li ng-repeat="pokemon in player.pokemon | filter:{inbag:true}" ng-click="direction('front');go('/game/player/{{$index}}')" class="link" >
+            {{ pokemon.name }}
+            <span class="chevron"></span>   
+            <span class="count">{{pokemon.level}}</span>        
+            <a class="button-negative" ng-click="removePlayer($index);" style="right: 60px;">Remove</a>  
+        </li>
+    </ul>
+
+</div>

@@ -21,7 +21,7 @@
         <li class="list-divider">Types</li>
         <li>{{pokemon.type1}}<br />{{pokemon.type2}}</li>
         <li class="list-divider">Moves</li>
-        <li><span>{{move.move}} (level {{move.level}})<br /></span></li>
+        <li><span ng-repeat="move in pokemon.learnset">{{move.move}} (level {{move.level}})<br /></span></li>
         <li class="list-divider">Base Stats</li>
         <li>
             <span>Attack: {{pokemon.baseStats.atk}}</span><br />

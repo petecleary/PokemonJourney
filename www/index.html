@@ -4,6 +4,7 @@
     <meta charset="utf-8">
 	<title>Pokemon Journey</title> 
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
     <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
     <link rel="stylesheet" href="css/ratchet.css">
     <link rel="stylesheet" href="css/pokemonjourney.css">
@@ -20,5 +21,31 @@
         <div class="container" ng-view></div>
         <style ng-bind-html-unsafe="style"></style>
         <ng-view ng-animate="{enter: 'enter', leave: 'leave'}"></ng-view>
+
+        
+        <nav class="bar-tab"  ng-controller="OmniNavCtrl">
+          <ul class="tab-inner">
+            <li class="tab-item link" ng-click="direction('front');go('/home')">
+                <img class="tab-icon" src="img/icon-home.png">
+                <div class="tab-label">Home</div>
+            </li>
+            <li class="tab-item link" ng-click="direction('front');go('/rules')">
+                <img class="tab-icon" src="img/icon-home.png">
+                <div class="tab-label">Rules</div>
+            </li>
+            <li class="tab-item link" ng-click="direction('front');go('/settings')">
+                <img class="tab-icon" src="img/icon-settings.png">
+                <div class="tab-label">Settings</div>
+            </li>
+            <li class="tab-item link" ng-click="direction('front');go('/rules')">
+                <img class="tab-icon" src="img/icon-home.png">
+                <div class="tab-label">Game</div>
+            </li>
+            <li class="tab-item link" ng-click="direction('front');go('/pokedex')">
+                <img class="tab-icon" src="img/icon-home.png">
+                <div class="tab-label">Pokedex</div>
+            </li>
+          </ul>
+        </nav>
   </body>
 </html>

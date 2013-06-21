@@ -1,9 +1,29 @@
-
 <header class="bar-title">
-  <span class="button-prev" ng-click="direction('back');go('/home')">
-    Home
-  </span>
+    <span class="button" ng-click="direction('back');go('/home')">Home
+    </span>
     <h1 class="title">New Game</h1>
 </header>
 <div class="content">
+
+    <form name="gameForm">
+        <input type="text" ng-model="gameName" name="gameName" placeholder="enter game name" required ng-class="{error: gameForm.gameName.$invalid}">
+        <a class="button-positive button-block" ng-click="createGame();" ng-disabled="gameForm.$invalid">Create game</a>
+    </form>
+
+    <form name="playerForm">
+        <input type="text" ng-model="playerName" name="playerName" placeholder="enter player name" required ng-class="{error: playerForm.playerName.$invalid}">
+        <ul class="list">
+            <li ng-repeat="pokemon in startingPokemon">
+                <input type="radio" ng-model="$parent.selectedStarter" name="startingPokemon" value="{{pokemon.id}}" id="{{pokemon.id}}">{{pokemon.name}}
+            </li>
+        </ul>
+        <a class="button-main button-block" ng-click="addPlayer();" ng-disabled="playerForm.$invalid">Add player</a>
+    </form>
+
+        <ul class="list">
+            <li class="list-divider">Players</li>
+            <li ng-repeat="player in players">{{player.name}}
+                  <a class="button-negative" ng-click="removePlayer($index);">Delete</a>
+            </li>
+        </ul>
 </div>

@@ -1,0 +1,13 @@
+
+<header class="bar-title">
+    <h1 class="title">{{game.name}}</h1>
+</header>
+<div class="content"> 
+    <ul class="list">
+        <li ng-repeat="player in game.players" ng-click="direction('front');go('/game/{{game.index}}/{{$index}}')" class="link" >
+            {{player.name}}
+            <span class="chevron"></span>
+            <span class="count">{{player.pokemon.length}}</span>
+        </li>
+    </ul>
+</div>

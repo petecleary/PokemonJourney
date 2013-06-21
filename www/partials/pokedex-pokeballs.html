@@ -1,0 +1,17 @@
+
+<header class="bar-title">
+  <span class="button-prev" ng-click="direction('back');goBack();">
+    Back
+  </span>
+    <h1 class="title">Pokeballs</h1>
+</header>
+<div class="content">
+    <ul class="list">
+        <li ng-repeat="pokeball in pokeballs">
+            <div class="sprite-image" style="width: 25px; height:25px; overflow:hidden; position:relative; float:left; margin-right:10px;">
+                <img src="img/pokeballs.png" alt="icon" width="121" height="144" style="position:absolute; top: {{pokeball.imagetop}}px; left: {{pokeball.imageleft}}px;">
+            </div>
+          {{pokeball.name}}
+        </li>
+    </ul>
+</div>
