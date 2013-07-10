@@ -56,7 +56,7 @@ app.config(function ($routeProvider) {
       })
       .when('/settings', {
           templateUrl: 'partials/settings.html',
-          controller: 'MainCtrl'
+          controller: 'SettingsCtrl'
       })
       .otherwise({
           redirectTo: '/'
@@ -115,6 +115,40 @@ app.controller('MainCtrl', function ($scope, $rootScope, $location, pokedexServi
     };
 });
 
+app.controller('SettingsCtrl', function ($scope, $rootScope, $location, pokedexService) {
+
+    //Navigation elements
+    $scope.direction = function (dir) {
+        // update the animations classes
+        $rootScope.style = app.styles[dir];
+    }
+
+    $scope.go = function (path) {
+        $location.path(path);
+    }
+    $scope.direction('front');
+
+    $scope.goBack = function () {
+        window.history.back();
+    };
+    //Navigation elements
+
+    init();
+    function init() {
+        $scope.music = localStorage["pokemonjourney.music"];
+    };
+
+    $scope.changeMusic = function () {
+        if (localStorage["pokemonjourney.music"] === 'true') {
+            localStorage["pokemonjourney.music"] = false;
+            pokedexService.musicStop();
+        } else {
+            localStorage["pokemonjourney.music"] = true;
+            pokedexService.musicPlay();
+        };
+    };
+});
+
 app.controller('PokedexCtrl', function ($scope, $rootScope, $location, $routeParams, pokedexService) {
 
     //Navigation elements
@@ -148,7 +182,6 @@ app.controller('PokedexCtrl', function ($scope, $rootScope, $location, $routePar
     $scope.toggleHidden = function (i) {
         var chevron = document.getElementById('pokedex-move-chevron-' + i);
         var div = document.getElementById('pokedex-move-details-' + i);
-        console.log(div);
         if (div.className === 'hidden') {
             div.className = 'show';
             div.style.display = 'block;'

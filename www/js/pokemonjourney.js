@@ -4,15 +4,35 @@ var pokedex = { data: {} };
 
 app.service('pokedexService', function () {
 
-    this.music = function () {
+    var musicUrls = new Array();
+    musicUrls[0] = 'Pokemon_Center.mp3';
+    musicUrls[1] = 'pokemon.mp3';
+    var musicNext = 0;
 
-        init = function() {
-            var audioPlayer = new Audio();
-            audioPlayer.src = "music/pokemon.mp3";
-            document.getElementById("mplayer").appendChild(audioPlayer);
+    this.musicNextTune = function () {
+        var audioPlayer = document.getElementsByTagName('audio')[0];
+        audioPlayer.src = "music/" + musicUrls[musicNext];
+        audioPlayer.load();
+        if (localStorage["pokemonjourney.music"] === 'true') {
+            audioPlayer.play();
         }
+        musicNext++;
+        if (musicNext >= musicUrls.length) musicNext = 0;
+        return audioPlayer;
+    };
 
-    }
+    this.musicPlay = function () {
+        var audioPlayer = document.getElementsByTagName('audio')[0];
+        if (localStorage["pokemonjourney.music"] === 'true') {
+            audioPlayer.play();
+        }
+        return audioPlayer;
+    };
+
+    this.musicStop = function () {
+        var audioPlayer = document.getElementsByTagName('audio')[0];
+        audioPlayer.pause();
+    };
 
     this.pokedexGetPokemon = function (id) {
         var col = 0;
@@ -62,8 +82,16 @@ app.service('pokedexService', function () {
             //save to local store
             localStorage["pokemonjourney.games"] = JSON.stringify(this.games);
         }
-
         this.games = JSON.parse(localStorage["pokemonjourney.games"]);
+
+        //set up local store
+        if (!localStorage["pokemonjourney.music"]) {
+            //save to local store
+            localStorage["pokemonjourney.music"] = true;
+        }
+        //call music
+        this.musicNextTune().addEventListener('ended', this.musicNextTune, false);
+
     }
     this.init();
 
