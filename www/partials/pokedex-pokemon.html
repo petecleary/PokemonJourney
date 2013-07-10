@@ -1,13 +1,16 @@
 
 <header class="bar-title">
-  <span class="button-prev" ng-click="direction('back');goBack();">
+  <span class="button" ng-click="direction('back');goBack();">
     Back
   </span>
     <h1 class="title">Pokemon</h1>
 </header>
 <div class="content">
+    <form>
+      <input type="search" placeholder="Search" ng-model="query">
+    </form>
     <ul class="list">
-        <li ng-repeat="pokemon in pokemons" ng-click="direction('front');go('/pokedex/pokemon/{{pokemon.id - 1}}')" class="link" >
+        <li ng-repeat="pokemon in pokemons | filter:query" ng-click="direction('front');go('/pokedex/pokemon/{{pokemon.id - 1}}')" class="link" >
           {{pokemon.name}}
           <span class="chevron"></span>
         </li>

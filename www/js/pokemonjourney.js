@@ -5,6 +5,18 @@ var pokedex = { data: {} };
 app.service('pokedexService', function () {
 
     this.pokedexGetPokemon = function (id) {
+        var col = 0;
+        var row = 0;
+        for (var x = 0; x < pokedex.data.pokemon.length; x++) {
+            pokedex.data.pokemon[x].imageLeft = (col * -120);
+            pokedex.data.pokemon[x].imageTop = (row * -120);
+            col += 1;
+            if (col > 14) {
+                col = 0;
+                row += 1;
+            }
+        }
+        console.log(JSON.stringify(pokedex.data.pokemon));
         if (id > -1 && id < pokedex.data.pokemon.length) {
             return pokedex.data.pokemon[id];
         }
@@ -44,8 +56,8 @@ app.service('pokedexService', function () {
         this.games = JSON.parse(localStorage["pokemonjourney.games"]);
     }
     this.init();
-    
-    this.createGame = function(name, players){
+
+    this.createGame = function (name, players) {
         var game = {};
         game.name = name;
         game.players = players;
@@ -54,15 +66,15 @@ app.service('pokedexService', function () {
         return this.games.length;
     }
 
-    this.createPlayer = function(name){
+    this.createPlayer = function (name) {
         var player = {};
         player.name = name;
         player.remove = false;
         player.pokemon = [];
         player.bag = { money: 100, pokemon: [], pokeballs: [], badges: [] };
-        
+
         player.addPokeball = function (id) {
-            player.bag.pokeballs.push({ name: pokedex.data.pokeballs[id].name, value: pokedex.data.pokeballs[id].value, valueType: pokedex.data.pokeballs[id].valueType, 'imagetop': pokedex.data.pokeballs[id].imagetop, 'imageleft': pokedex.data.pokeballs[id].imageleft});
+            player.bag.pokeballs.push({ name: pokedex.data.pokeballs[id].name, value: pokedex.data.pokeballs[id].value, valueType: pokedex.data.pokeballs[id].valueType, 'imagetop': pokedex.data.pokeballs[id].imagetop, 'imageleft': pokedex.data.pokeballs[id].imageleft });
         }
 
         player.addPokemon = function (id, level, inbag) {
