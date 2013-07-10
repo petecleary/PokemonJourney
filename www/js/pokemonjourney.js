@@ -4,6 +4,16 @@ var pokedex = { data: {} };
 
 app.service('pokedexService', function () {
 
+    this.music = function () {
+
+        init = function() {
+            var audioPlayer = new Audio();
+            audioPlayer.src = "music/pokemon.mp3";
+            document.getElementById("mplayer").appendChild(audioPlayer);
+        }
+
+    }
+
     this.pokedexGetPokemon = function (id) {
         var col = 0;
         var row = 0;
