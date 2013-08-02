@@ -5,17 +5,31 @@ var pokedex = { data: {} };
 app.service('pokedexService', function () {
 
     var musicUrls = new Array();
-    musicUrls[0] = 'Pokemon_Center.mp3';
-    musicUrls[1] = 'pokemon.mp3';
+    musicUrls[0] = 'Pokemon_Center';
+    musicUrls[1] = 'pokemon';
     var musicNext = 0;
 
     this.musicNextTune = function () {
         var audioPlayer = document.getElementsByTagName('audio')[0];
-        audioPlayer.src = "music/" + musicUrls[musicNext];
+
+        //clear sources
+        audioPlayer.innerHTML = '';
+        //add new source
+        var source = document.createElement('source');
+        if (audioPlayer.canPlayType('audio/mpeg;')) {
+            source.src = "music/" + musicUrls[musicNext] + '.mp3';
+            source.type = 'audio/mpeg';
+        } else {
+            source.src = "music/" + musicUrls[musicNext] + '.ogg';
+            source.type = 'audio/ogg';
+        }
+        audioPlayer.appendChild(source);
         audioPlayer.load();
         if (localStorage["pokemonjourney.music"] === 'true') {
             audioPlayer.play();
         }
+        console.log(audioPlayer);
+        audioPlayer.play();
         musicNext++;
         if (musicNext >= musicUrls.length) musicNext = 0;
         return audioPlayer;
